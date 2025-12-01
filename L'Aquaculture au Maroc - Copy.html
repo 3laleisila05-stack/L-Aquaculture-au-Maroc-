@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="Icon" type="image/png" href="ocean.jpg.png">
+    <title>L'Aquaculture au Maroc</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* نفس التصميم (CSS) باش يبقى الشكل زوين */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap');
+
+        :root {
+            --primary: #00a2ff;
+            --secondary: #00334e;
+            --accent: #ffffff;
+            --text: #000000;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #60a3e6;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 95%;
+            max-width: 1100px;
+            aspect-ratio: 16/9;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .watermark {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
+            z-index: 100;
+            pointer-events: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .slide {
+            flex: 1;
+            display: none;
+            padding: 40px;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+        
+        /* فلتر كحل خفيف باش الكتابة تبان فوق الخلفية */
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.4); 
+            z-index: 1;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.99); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .slide-content {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 12px solid var(--primary);
+            width: 100%;
+            max-width: 950px;
+            margin: 0 auto;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        h1 { color: var(--secondary); font-size: 2rem; margin-bottom: 5px; text-transform: uppercase; }
+        h2 { color: var(--primary); font-size: 1.4rem; margin-bottom: 10px; font-weight: 600; }
+        p, li { font-size: 1rem; line-height: 1.5; color: var(--text); }
+
+        .visual-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .visual-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 180px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            background: #ccc;
+        }
+
+        .visual-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .visual-item:hover img { transform: scale(1.05); }
+
+        .visual-caption {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 8px;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .narrator-box {
+            background: #1a252f;
+            color: #ecf0f1;
+            padding: 15px;
+            font-size: 1rem;
+            border-top: 5px solid var(--accent);
+            height: 140px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-style: italic;
+            z-index: 2; /* باش يبان فوق الخلفية */
+            position: relative;
+        }
+        
+        .narrator-label {
+            font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            background: var(--primary);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        button:hover { background: var(--secondary); transform: translateY(-2px); }
+        .autoplay-btn { background: #e74c3c; }
+        .voice-btn { background: #27ae60; }
+
+        /* تنسيق خاص للخلفيات الافتراضية باش تعرف تبدلها */
+        /* BDL HNA: هادو هوما الخلفيات */
+        #slide1 { background-image: url('coucher-soleil-pittoresque-mer-rayons-du-soleil-nuages-sombres-au-dessus-mer-du-nord_52720-751.webp'); }
+        #slide2 { background-image: url('paysage-marin-entree-du-port-sauzon-ile-belle-ile-mer-dans-morbiha_105413-624.webp'); }
+        #slide3 { background-image: url('vue-aérienne-des-vagues-de-mer-et-la-plage-sablonneuse-140754744.webp'); }
+        #slide4 { background-image: url('pexels-photo-247506.webp'); }
+
+    </style>
+</head>
+<body>
+
+    <div class="presentation-container">
+        <!-- Watermark -->
+        <div class="watermark">Réalisé par : ALAE ELASSAL</div>
+
+        <!-- Slide 1: Introduction -->
+        <div class="slide active" id="slide1">
+            <!-- BDL HNA: بدل الرابط الفوق في CSS باش دير خلفية الشريحة 1 -->
+            <div class="slide-content">
+                <h1>L'Aquaculture au Maroc</h1>
+                <h2>Une Vision Royale (Plan Halieutis)</h2>
+                <div style="display: flex; gap: 20px; align-items: center;">
+                    <div style="flex: 1;">
+                        <p><strong>Contexte :</strong> Avec 3500 km de littoral, le Maroc transforme son économie bleue.</p>
+                        <ul style="margin-top: 10px;">
+                            <li>Création de l'<strong>ANDA</strong> pour l'organisation.</li>
+                            <li>Objectif de durabilité et préservation des océans.</li>
+                        </ul>
+                    </div>
+                    <div style="flex: 1;">
+                        <!-- BDL HNA: حط سمية التصويرة ديالك بلاصة الرابط الطويل -->
+                        <!-- مثال: src="images/intro.jpg" -->
+                        <img src="plage-rabat_0.webp" style="width:100%; border-radius:10px; height:180px; object-fit:cover;" alt="Mer Maroc">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Companies & Marine Zones -->
+        <div class="slide" id="slide2">
+            <div class="slide-content">
+                <h2>Pôles Industriels et Espèces</h2>
+                <p>Le Maroc a divisé ses côtes en zones spécialisées :</p>
+                <div class="visual-grid">
+                    <div class="visual-item">
+                        <!-- BDL HNA: تصويرة المحار أو الداخلة -->
+                        <!-- مثال: src="images/huitres.jpg" -->
+                        <img src="12b7c9_f3b97b84f2c748ba9fe12bbfd940474d~mv2.webp" alt="Huîtres Dakhla">
+                        <div class="visual-caption">Sud (Dakhla) : Huîtres et Moules</div>
+                    </div>
+                    <div class="visual-item">
+                        <!-- BDL HNA: تصويرة المزارع السمكية -->
+                        <!-- مثال: src="images/poissons.jpg" -->
+                        <img src="Færøsk_havbrug.1.webp" alt="Pisciculture Nord">
+                        <div class="visual-caption">Nord (Méditerranée) : Loup et Daurade</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Dams & Continental Aquaculture -->
+        <div class="slide" id="slide3">
+            <div class="slide-content">
+                <h2>Aquaculture Continentale (Barrages)</h2>
+                <p>L'utilisation des barrages pour produire du poisson en eau douce :</p>
+                <div class="visual-grid">
+                    <div class="visual-item">
+                        <!-- BDL HNA: تصويرة السد -->
+                        <!-- مثال: src="images/barrage.jpg" -->
+                        <img src="Al-Massira-barrage.webp" alt="Barrage">
+                        <div class="visual-caption">Barrage Al Massira & Bin El Ouidane</div>
+                    </div>
+                    <div class="visual-item">
+                        <!-- BDL HNA: تصويرة سمك التيلابيا -->
+                        <!-- مثال: src="images/tilapia.jpg" -->
+                        <img src="26-septembre-2012-029-725x483.webp" alt="Tilapia">
+                        <div class="visual-caption">Espèces : Tilapia, Carpe, Truite</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Conclusion -->
+        <div class="slide" id="slide4">
+            <div class="slide-content" style="text-align: center; max-width: 700px;">
+                <h1>Conclusion</h1>
+                <div style="margin: 20px auto; width: 100px; height: 100px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                    <i class="fas fa-check-circle" style="font-size: 3rem; color: #27ae60;"></i>
+                </div>
+                <p>L'aquaculture est l'avenir de l'alimentation au Maroc, créant des milliers d'emplois.</p>
+                <div style="margin-top: 20px; font-weight: 800; font-size: 1.5rem; color: var(--secondary); letter-spacing: 1px;">
+                    PRÉSENTÉ PAR : ALAE ELASSAL
+                </div>
+            </div>
+        </div>
+
+        <!-- Narrator Box -->
+        <div class="narrator-box">
+            <div class="narrator-label">
+                <i class="fas fa-volume-up"></i> SCRIPT AUDIO
+            </div>
+            <span id="narrator-text">Chargement...</span>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+        <button onclick="prevSlide()"><i class="fas fa-backward"></i> Précédent</button>
+        <button onclick="speakCurrentText()" class="voice-btn"><i class="fas fa-microphone"></i> Écouter (Voix)</button>
+        <button onclick="toggleAutoPlay()" class="autoplay-btn"><i class="fas fa-play"></i> Lecture Vidéo</button>
+        <button onclick="nextSlide()">Suivant <i class="fas fa-forward"></i></button>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const narratorText = document.getElementById('narrator-text');
+        let currentSlide = 0;
+        let autoPlayInterval;
+        let isPlaying = false;
+        let voices = [];
+
+        window.speechSynthesis.onvoiceschanged = function() {
+            voices = window.speechSynthesis.getVoices();
+        };
+
+        // Scripts array. No Name Pronunciation.
+        const scripts = [
+            "Bienvenue. L'aquaculture au Maroc est un pilier de l'économie bleue, guidé par la stratégie Halieutis. Avec 3500 kilomètres de côtes, le royaume investit massivement pour préserver ses océans tout en produisant durablement.",
+            "Le secteur est structuré en pôles régionaux. Au sud, dans la baie de Dakhla, on pratique l'élevage d'huîtres de qualité. Au nord, en Méditerranée, les cages flottantes produisent du poisson noble comme le loup et la daurade.",
+            "Loin des côtes, les barrages jouent un rôle clé. Les barrages Al Massira et Bin El Ouidane sont utilisés pour élever du Tilapia et de la Truite, apportant du poisson frais aux régions intérieures.",
+            "Pour conclure, ce secteur prometteur assure l'avenir alimentaire du pays. Ce travail de recherche a été réalisé et présenté avec soin. Merci de votre attention."
+        ];
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                    narratorText.textContent = scripts[i]; 
+                    if(isPlaying) speakCurrentText();
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        function toggleAutoPlay() {
+            const btn = document.querySelector('.autoplay-btn');
+            if (isPlaying) {
+                clearInterval(autoPlayInterval);
+                window.speechSynthesis.cancel();
+                btn.innerHTML = '<i class="fas fa-play"></i> Lecture Vidéo';
+                isPlaying = false;
+            } else {
+                speakCurrentText();
+                autoPlayInterval = setInterval(nextSlide, 13000); 
+                btn.innerHTML = '<i class="fas fa-pause"></i> Pause';
+                isPlaying = true;
+            }
+        }
+
+        function speakCurrentText() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                
+                const textToSpeak = scripts[currentSlide];
+                const utterance = new SpeechSynthesisUtterance(textToSpeak);
+                
+                const frVoices = voices.filter(voice => voice.lang.includes('fr'));
+                
+                let selectedVoice = frVoices.find(voice => voice.name.includes('Google') && voice.name.includes('Français'));
+                if (!selectedVoice) selectedVoice = frVoices.find(voice => voice.name.includes('Microsoft') && voice.name.includes('Paul'));
+                if (!selectedVoice) selectedVoice = frVoices.find(voice => voice.name.toLowerCase().includes('male'));
+                if (!selectedVoice && frVoices.length > 0) selectedVoice = frVoices[0];
+
+                if (selectedVoice) {
+                    utterance.voice = selectedVoice;
+                }
+                
+                utterance.pitch = 1.0; 
+                utterance.rate = 0.9;
+                utterance.lang = 'fr-FR';
+
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("Votre navigateur ne supporte pas la synthèse vocale.");
+            }
+        }
+
+        // Initialize
+        narratorText.textContent = scripts[0];
+        
+        setTimeout(() => {
+            voices = window.speechSynthesis.getVoices();
+        }, 500);
+
+    </script>
+</body>
+</html>

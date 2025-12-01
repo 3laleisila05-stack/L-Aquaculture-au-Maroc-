@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Status and Production</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            color: #ffffff;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background: linear-gradient(rgba(0, 51, 102, 0.85), rgba(0, 51, 102, 0.85)), 
+                        url('https://sfile.chatglm.cn/images-ppt/2378ba6f0d64.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+        }
+        .content {
+            padding: 60px 70px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .title {
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: #ffffff;
+        }
+        .main-content {
+            display: flex;
+            flex-grow: 1;
+            gap: 40px;
+        }
+        .left-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .right-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .stat-highlight {
+            font-size: 64px;
+            font-weight: 700;
+            color: #90CAF9;
+            margin-bottom: 15px;
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+        .growth-factors {
+            margin-top: 20px;
+        }
+        .factor {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        .factor i {
+            margin-right: 15px;
+            color: #64B5F6;
+            margin-top: 2px;
+        }
+        .highlight {
+            color: #90CAF9;
+            font-weight: 600;
+        }
+        .chart-container {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            perspective: 1000px;
+        }
+        .chart-wrapper {
+            transform: rotateY(-5deg);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+        }
+        .comparison-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .year {
+            text-align: center;
+        }
+        .year-value {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .year-label {
+            font-size: 16px;
+        }
+        .arrow {
+            font-size: 36px;
+            color: #90CAF9;
+        }
+        .percentage {
+            font-size: 28px;
+            font-weight: 700;
+            color: #90CAF9;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="content">
+            <h1 class="title">Current Status and Production</h1>
+            
+            <div class="main-content">
+                <div class="left-content">
+                    <div class="stat-highlight">3,600</div>
+                    <div class="stat-label">Tons of current annual production</div>
+                    
+                    <div class="comparison-box">
+                        <div class="year">
+                            <div class="year-value">1,690</div>
+                            <div class="year-label">2004</div>
+                        </div>
+                        <div class="arrow">→</div>
+                        <div class="percentage">+113%</div>
+                        <div class="arrow">→</div>
+                        <div class="year">
+                            <div class="year-value">3,600</div>
+                            <div class="year-label">2025</div>
+                        </div>
+                    </div>
+                    
+                    <div class="growth-factors">
+                        <div class="factor">
+                            <i class="material-icons">business</i>
+                            <span><span class="highlight">322 licensed farms</span> across Morocco</span>
+                        </div>
+                        <div class="factor">
+                            <i class="material-icons">pie_chart</i>
+                            <span>Marine aquaculture: <span class="highlight">47%</span> of production</span>
+                        </div>
+                        <div class="factor">
+                            <i class="material-icons">water</i>
+                            <span>Inland aquaculture: <span class="highlight">40%</span> of production</span>
+                        </div>
+                        <div class="factor">
+                            <i class="material-icons">trending_up</i>
+                            <span>Target: <span class="highlight">124,000</span> tons by 2026</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-content">
+                    <div class="chart-container">
+                        <div class="chart-wrapper">
+                            <canvas id="productionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('productionChart').getContext('2d');
+            
+            const productionChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['2004', '2010', '2015', '2020', '2025'],
+                    datasets: [{
+                        label: 'Aquaculture Production (tons)',
+                        data: [1690, 2100, 2600, 3100, 3600],
+                        backgroundColor: [
+                            'rgba(144, 202, 249, 0.7)',
+                            'rgba(144, 202, 249, 0.7)',
+                            'rgba(144, 202, 249, 0.7)',
+                            'rgba(144, 202, 249, 0.7)',
+                            'rgba(100, 181, 246, 0.9)'
+                        ],
+                        borderColor: [
+                            'rgba(144, 202, 249, 1)',
+                            'rgba(144, 202, 249, 1)',
+                            'rgba(144, 202, 249, 1)',
+                            'rgba(144, 202, 249, 1)',
+                            'rgba(100, 181, 246, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

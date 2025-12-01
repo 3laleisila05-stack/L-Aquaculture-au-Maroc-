@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future Goals</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            color: #ffffff;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background: linear-gradient(rgba(0, 51, 102, 0.85), rgba(0, 51, 102, 0.85)), 
+                        url('https://sfile.chatglm.cn/images-ppt/4ce90ad698e5.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+        }
+        .content {
+            padding: 60px 70px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .title {
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: #ffffff;
+        }
+        .main-content {
+            display: flex;
+            flex-grow: 1;
+            gap: 40px;
+        }
+        .left-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .right-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .goal-highlight {
+            font-size: 64px;
+            font-weight: 700;
+            color: #90CAF9;
+            margin-bottom: 15px;
+            line-height: 1;
+        }
+        .goal-label {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+        .goal-factors {
+            margin-top: 20px;
+        }
+        .factor {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        .factor i {
+            margin-right: 15px;
+            color: #64B5F6;
+            margin-top: 2px;
+        }
+        .highlight {
+            color: #90CAF9;
+            font-weight: 600;
+        }
+        .chart-container {
+            width: 100%;
+            height: 360px;
+            perspective: 1000px;
+            position: relative;
+        }
+        .chart-wrapper {
+            transform: rotateY(-5deg);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            height: 100%;
+        }
+        .timeline-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            perspective: 1000px;
+            transform: rotateY(-5deg);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .timeline-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #90CAF9;
+            display: flex;
+            align-items: center;
+        }
+        .timeline-title i {
+            margin-right: 15px;
+            font-size: 32px;
+        }
+        .milestone {
+            display: flex;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        .milestone-year {
+            font-size: 24px;
+            font-weight: 700;
+            color: #90CAF9;
+            margin-right: 15px;
+            min-width: 80px;
+        }
+        .milestone-content {
+            font-size: 20px;
+            flex-grow: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="content">
+            <h1 class="title">Future Goals</h1>
+            
+            <div class="main-content">
+                <div class="left-content">
+                    <div class="goal-highlight">300,000</div>
+                    <div class="goal-label">Tons of aquaculture production target within the next decade</div>
+                    
+                    <div class="goal-highlight">30,000</div>
+                    <div class="goal-label">Jobs to be created in the aquaculture sector</div>
+                    
+                    <div class="goal-factors">
+                        <div class="factor">
+                            <i class="material-icons">trending_up</i>
+                            <span><span class="highlight">83x increase</span> from current production</span>
+                        </div>
+                        <div class="factor">
+                            <i class="material-icons">public</i>
+                            <span>Meeting growing domestic seafood demand</span>
+                        </div>
+                        <div class="factor">
+                            <i class="material-icons">eco</i>
+                            <span>Sustainable blue economy development</span>
+                        </div>
+                        <div class="factor">
+                            <i class="material-icons">business</i>
+                            <span>World Bank and private sector partnerships</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-content">
+                    <div class="chart-container">
+                        <div class="chart-wrapper">
+                            <canvas id="goalsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('goalsChart').getContext('2d');
+            
+            const goalsChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['2025', '2028', '2030', '2033', '2035'],
+                    datasets: [{
+                        label: 'Production Target (tons)',
+                        data: [3600, 50000, 100000, 200000, 300000],
+                        backgroundColor: 'rgba(144, 202, 249, 0.2)',
+                        borderColor: 'rgba(144, 202, 249, 1)',
+                        borderWidth: 3,
+                        pointBackgroundColor: 'rgba(144, 202, 249, 1)',
+                        pointRadius: 5,
+                        tension: 0.3,
+                        fill: true
+                    }, {
+                        label: 'Jobs Target',
+                        data: [null, 5000, 10000, 20000, 30000],
+                        backgroundColor: 'rgba(100, 181, 246, 0.2)',
+                        borderColor: 'rgba(100, 181, 246, 1)',
+                        borderWidth: 3,
+                        pointBackgroundColor: 'rgba(100, 181, 246, 1)',
+                        pointRadius: 5,
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

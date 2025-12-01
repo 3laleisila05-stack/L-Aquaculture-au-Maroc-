@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historical Development of Aquaculture in Morocco</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            color: #ffffff;
+            overflow: hidden;
+        }
+        .slide {
+            width: 1280px;
+            min-height: 720px;
+            position: relative;
+            background: linear-gradient(rgba(0, 51, 102, 0.85), rgba(0, 51, 102, 0.85)), 
+                        url('https://sfile.chatglm.cn/images-ppt/3a9cb5b3440d.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+        }
+        .content {
+            padding: 60px 70px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .title {
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: #ffffff;
+        }
+        .main-content {
+            display: flex;
+            flex-grow: 1;
+            gap: 40px;
+        }
+        .left-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .right-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .era {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        .era-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #90CAF9;
+            display: flex;
+            align-items: center;
+        }
+        .era-title i {
+            margin-right: 10px;
+        }
+        .era-details {
+            font-size: 20px;
+            line-height: 1.4;
+            padding-left: 34px;
+        }
+        .highlight {
+            color: #90CAF9;
+            font-weight: 600;
+        }
+        .image-container {
+            width: 100%;
+            height: 360px;
+            perspective: 1000px;
+            position: relative;
+        }
+        .image-3d {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transform: rotateY(-5deg);
+            transition: transform 0.5s;
+        }
+        .image-3d img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .stat-box {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 8px;
+            backdrop-filter: blur(5px);
+            transform: rotateY(-10deg) translateZ(20px);
+        }
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #90CAF9;
+        }
+        .stat-label {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="slide">
+        <div class="content">
+            <h1 class="title">Historical Development of Aquaculture in Morocco</h1>
+            
+            <div class="main-content">
+                <div class="left-content">
+                    <div class="era">
+                        <div class="era-title">
+                            <i class="material-icons">history</i>
+                            <span>1950s: Shellfish Culture Beginnings</span>
+                        </div>
+                        <div class="era-details">
+                            • First marine shellfish farms established<br>
+                            • Primarily oyster production (~200 tons)<br>
+                            • Small-scale operations for local markets
+                        </div>
+                    </div>
+                    
+                    <div class="era">
+                        <div class="era-title">
+                            <i class="material-icons">waves</i>
+                            <span>1980s: Marine Fish Farming</span>
+                        </div>
+                        <div class="era-details">
+                            • Introduction of <span class="highlight">European seabass</span> and <span class="highlight">gilthead seabream</span><br>
+                            • Development of floating cage systems<br>
+                            • Initial export markets to Italy, Spain, France
+                        </div>
+                    </div>
+                    
+                    <div class="era">
+                        <div class="era-title">
+                            <i class="material-icons">trending_up</i>
+                            <span>2000s-Present: Modernization & Growth</span>
+                        </div>
+                        <div class="era-details">
+                            • Production growth from 1,690 tons (2004) to 3,600 tons<br>
+                            • Expansion of inland aquaculture (carp, trout)<br>
+                            • New regulatory framework and investment initiatives
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-content">
+                    <div class="image-container">
+                        <div class="image-3d">
+                            <img src="https://sfile.chatglm.cn/images-ppt/17765cefc3bc.jpg" alt="Moroccan aquaculture development">
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-number">70+</div>
+                            <div class="stat-label">years of aquaculture history</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
